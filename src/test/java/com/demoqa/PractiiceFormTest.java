@@ -2,9 +2,13 @@ package com.demoqa;
 
 
 import com.codeborne.selenide.Configuration;
+import io.netty.handler.codec.http.multipart.FileUpload;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -13,7 +17,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class PractiiceFormTest {
     @BeforeAll
     static void configure(){
-        //Configuration.browserSize = '1300x952';
+        Configuration.browserSize = "650x952";
     }
 
     @Test
@@ -23,12 +27,22 @@ public class PractiiceFormTest {
     $("#lastName").setValue("Testova");
     $("#userEmail").setValue("test@test.ru");
     $(byText("Female")).click();
-    $("#userNumber").setValue("123456789");
+    $("#userNumber").setValue("9091234455");
     $("#dateOfBirthInput").click();
     $("[class=react-datepicker__year-select]").selectOptionByValue("2000");
     $("[class=react-datepicker__month-select]").selectOptionByValue("4");
     $(".react-datepicker__day--019").click();
+    $("#subjectsInput").setValue("Maths").pressEnter();
+    $(byText("Reading")).click();
+    $("#uploadPicture").uploadFile( new File("src/test/resource/test.jpg"));
+    $("#currentAddress").setValue("Moscow");
+    $(byText("Select State")).click();
+    $(byText("Haryana")).click();
+    $(byText("Select City")).click();
+    $(byText("Karnal")).click();
+    $("#submit").click();
 
-        $("#dateOfBirthInput").click();
+    $(".table-responsive").shouldHave(text("Irina Testova"),text("test@test.ru"),text("Female"),text("9091234455"));
+    $(".table-responsive").shouldHave(text("Maths"),text("Reading"),text("test.jpg"),text("Moscow"),text("Haryana Karnal"));
     }
 }
