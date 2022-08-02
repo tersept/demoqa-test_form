@@ -24,5 +24,11 @@ public class PractiiceFormTest {
     $("#userEmail").setValue("test@test.ru");
     $(byText("Female")).click();
     $("#userNumber").setValue("123456789");
+    $("#dateOfBirthInput").click();
+    $("[class=react-datepicker__year-select]").selectOptionByValue("2000");
+    $("[class=react-datepicker__month-select]").selectOptionByValue("4");
+    $(".react-datepicker__day--019").click();
+
+        $("#dateOfBirthInput").click();
     }
 }
